@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Créer un lot{% endblock %}
+
+{% block content %}
+<h2>Créer un nouveau lot</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <input type="text" name="espece" placeholder="Espèce" required class="form-control">
+    </div>
+
+    <div class="form-group">
+        <input type="number" step="0.01" name="poids" placeholder="Poids (kg)" required class="form-control">
+    </div>
+
+    <div class="form-group">
+        <input type="text" name="origine" placeholder="Origine" required class="form-control">
+    </div>
+
+    <div class="form-group">
+        <input type="number" name="prix_base" placeholder="Prix de départ (DH)" required class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="duree">Durée de l'enchère (en minutes)</label>
+        <input type="number" name="duree" min="1" max="1440" value="5" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer le lot</button>
+</form>
+
+{% endblock %}

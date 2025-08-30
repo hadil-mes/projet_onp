@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Détail du lot</h2>
+
+<p><strong>Espèce :</strong> {{ lot.espece }}</p>
+<p><strong>Poids :</strong> {{ lot.poids }} kg</p>
+<p><strong>Origine :</strong> {{ lot.origine }}</p>
+<p><strong>Prix de base :</strong> {{ lot.prix_base }} DH</p>
+<p><strong>Prix actuel :</strong> {{ lot.prix_actuel }} DH</p>
+
+<p><strong>Vendeur :</strong> {{ lot.vendeur.nom }}</p>
+<p><strong>Statut :</strong> {{ statut }}</p>
+
+{% if gagnant %}
+    <p><strong>🏆 Gagnant :</strong> {{ gagnant }}</p>
+{% endif %}
+
+<hr>
+
+<h4>Participer à l’enchère</h4>
+{% if current_user.is_authenticated %}
+    {% if current_user.id == lot.vendeur_id %}
+        <p style="color:red;">🔒 Vous êtes le vendeur de ce lot. Vous ne pouvez pas enchérir.</p>
+    {% elif lot.est_termine() %}
+        <p style="color:gray;">⏳ Cette enchère est terminée.</p>
+    {% else %}
+        <form action="{{ url_for('encherir', lot_id=lot.id) }}" method="POST">
+            <input type="number" name="montant" placeholder="Votre offre" required>
+            <button type="submit">💰 Enchérir</button>
+        </form>
+    {% endif %}
+{% else %}
+    <p><a href="{{ url_for('login') }}">🔑 Connectez-vous</a> pour enchérir.</p>
+{% endif %}
+
+<hr>
+
+<h3>Historique des enchères</h3>
+{% if encheres %}
+<table>
+    <tr>
+        <th>Montant</th>
+        <th>Acheteur</th>
+        <th>Date</th>
+    </tr>
+    {% for e in encheres %}
+    <tr>
+        <td>{{ e.montant }} DH</td>
+        <td>
+            {% if loop.first %}
+                {{ e.acheteur.nom }}   {# 👉 seul le dernier enchérisseur révélé #}
+            {% else %}
+                Anonyme
+            {% endif %}
+        </td>
+        <td>{{ e.date.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Aucune enchère encore pour ce lot.</p>
+{% endif %}
+{% if statut == "En cours" %}
+    <span style="background:green;color:white;padding:4px 8px;border-radius:5px;">🟢 En cours</span>
+{% else %}
+    <span style="background:red;color:white;padding:4px 8px;border-radius:5px;">🔴 Terminé</span>
+{% endif %}
+
+<a href="{{ url_for('encheres') }}">⬅ Retour à la liste des enchères</a>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ONP - Plateforme{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <img src="{{ url_for('static', filename='onp.png') }}" alt="ONP Logo" class="logo">
+        <nav>
+            <a href="{{ url_for('home') }}">Accueil</a>
+            <a href="{{ url_for('encheres') }}">Enchères</a>
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == 'vendeur' %}
+                    <a href="{{ url_for('creer_lot') }}">Créer un lot</a>
+                {% endif %}
+                <a href="{{ url_for('profil') }}">Profil</a>
+                <a href="{{ url_for('logout') }}">Déconnexion</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Connexion</a>
+                <a href="{{ url_for('register') }}">Inscription</a>
+                {% endif %}
+        </nav>
+    </header>
+    <!-- Zone d’affichage des messages flash -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+<main>
+        {% block content %}{% endblock %}
+    </main>
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+
+    
+</body>
+</html>
+
+

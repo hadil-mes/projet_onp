@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Enchères en cours{% endblock %}
+
+{% block content %}
+<h2>📦 Enchères en cours</h2>
+<p>Liste des lots disponibles pour enchère :</p>
+
+{% if message %}
+<p style="color:green;">{{ message }}</p>
+{% endif %}
+
+<div class="lots-container">
+    {% for lot in lots %}
+    <div class="card-lot">
+        <h3>{{ lot.espece }}</h3>
+
+        <p><strong>Poids :</strong> {{ lot.poids }} kg</p>
+        <p><strong>Origine :</strong> {{ lot.origine }}</p>
+        <p><strong>Prix actuel :</strong> <span class="prix">{{ lot.prix_actuel }} DH</span></p>
+
+        <p>
+            <span id="timer-{{ lot.id }}" 
+                  class="timer" 
+                  data-endtime="{{ lot.date_fin.strftime('%Y-%m-%dT%H:%M:%S') }}Z"></span>
+            <br>
+            <small>(se termine à {{ lot.date_fin.strftime('%Y-%m-%d %H:%M:%S') }})</small>
+        </p>
+
+        <div class="qr-container">
+            <img src="data:image/png;base64,{{ lot.qr_code }}" alt="QR Code" width="100">
+        </div>
+
+        <div class="action-section">
+            {% if current_user.is_authenticated %}
+                {% if current_user.id == lot.vendeur_id %}
+                    <button class="btn disabled">🚫 Vous êtes le vendeur</button>
+                {% elif lot.est_termine() %}
+                    <button class="btn disabled">⏰ Enchère terminée</button>
+                {% else %}
+                    <form class="bid-form" action="{{ url_for('encherir', lot_id=lot.id) }}" method="POST">
+                        <input type="number" name="montant" placeholder="Votre offre" required>
+                        <button type="submit" class="btn">💰 Enchérir</button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn">🔑 Connectez-vous pour enchérir</a>
+            {% endif %}
+        </div>
+
+        <a class="details-link" href="{{ url_for('detail_lot', lot_id=lot.id) }}">🔍 Voir détails</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Générateur QR Code{% endblock %}
+
+{% block content %}
+<h2>Générateur de QR Code</h2>
+<form action="/" method="post">
+    <label for="text">Entrez le texte à encoder :</label>
+    <input type="text" id="text" name="text" required>
+     <button type="submit">Générer</button>
+</form>
+ 
+{% if qr_img %}
+<div class="qr-container">
+    <h3>Voici votre QR Code :</h3>
+    <img src="data:image/png;base64,{{ qr_img }}" alt="QR Code">
+</div>
+{% endif %}
+{% endblock %}
