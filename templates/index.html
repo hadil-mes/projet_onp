@@ -18,40 +18,42 @@
         </ul>
     </nav>
 
-    <!-- Section de bienvenue -->
+    <!-- Section Hero -->
     <header class="hero">
-        <h1>Bienvenue sur la plateforme ONP</h1>
-        <p>
-            Une solution numérique pour gérer les ventes aux enchères de produits halieutiques 
-            de manière transparente, rapide et moderne.
-        </p>
-        <a href="{{ url_for('encheres') }}" class="btn-primary">Voir les enchères</a>
+        <div class="hero-content">
+            <h1>Bienvenue sur la plateforme ONP</h1>
+            <p>
+                Une solution numérique moderne pour gérer les ventes aux enchères 
+                de produits halieutiques de manière <b>rapide</b>, <b>transparente</b> et <b>sécurisée</b>.
+            </p>
+            <a href="{{ url_for('encheres') }}" class="btn-primary">Voir les enchères</a>
+        </div>
     </header>
 
-    <!-- Description de l’application -->
+    <!-- Description -->
     <section class="features">
-        <h2>Pourquoi ONP ?</h2>
+        <h2>🚀 Pourquoi choisir ONP ?</h2>
         <div class="feature-grid">
             <div class="feature">
                 <h3>📦 Gestion des lots</h3>
-                <p>Les vendeurs peuvent créer et publier facilement des lots de poissons à vendre.</p>
+                <p>Créez et publiez facilement vos lots de poissons.</p>
             </div>
             <div class="feature">
                 <h3>💰 Enchères en temps réel</h3>
-                <p>Les acheteurs enchérissent en direct avec un suivi automatique du prix actuel.</p>
+                <p>Participez aux enchères avec une mise à jour instantanée du prix.</p>
             </div>
             <div class="feature">
                 <h3>🔐 Sécurité</h3>
-                <p>Un système de connexion et rôles distincts pour sécuriser l’accès.</p>
+                <p>Connexion sécurisée et rôles distincts pour acheteurs & vendeurs.</p>
             </div>
             <div class="feature">
                 <h3>📱 QR Codes</h3>
-                <p>Chaque lot génère un QR code unique pour un accès rapide et fiable.</p>
+                <p>Chaque lot génère un QR code unique pour un accès rapide.</p>
             </div>
         </div>
     </section>
 
-    <!-- Pied de page -->
+    <!-- Footer -->
     <footer>
         <p>© 2025 Projet ONP - Plateforme d’enchères halieutiques</p>
     </footer>
