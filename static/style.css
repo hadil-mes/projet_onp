@@ -126,3 +126,27 @@ footer {
     padding: 15px;
     margin-top: 40px;
 }
+/* Hero enchères */
+.hero-encheres {
+    background: url("https://images.unsplash.com/photo-1606788075761-952f8b6e7b92") center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero-encheres .hero-content {
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+/* Section des lots */
+.lots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
