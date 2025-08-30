@@ -238,3 +238,4 @@ def login():
             flash("❌ Identifiants incorrects", "error")
 
     return render_template("login.html", form=form)
+
