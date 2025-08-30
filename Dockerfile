@@ -13,8 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copier le reste du projet
 COPY . .
 
-# Exposer le port Flask
+# Exposer le port Flask (Render utilisera $PORT)
 EXPOSE 10000
 
-# Lancer avec gunicorn (production)
-CMD ["gunicorn", "-b", "0.0.0.0:${PORT}", "app:app"]
+# Lancer avec gunicorn (Render fournit la variable $PORT)
+CMD ["gunicorn", "-b", "0.0.0.0:$PORT", "app:app"]
