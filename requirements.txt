@@ -7,3 +7,4 @@ gunicorn
 qrcode
 pillow
 email-validator
+pytz
