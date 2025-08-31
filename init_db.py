@@ -1,12 +1,13 @@
-from app import app, db, User, Lot
+from app.app import app, db
+from app.models import User, Lot, Bid
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
 
 with app.app_context():
-    # ✅ Créer les tables si elles n'existent pas
+    # 🔹 Créer les tables si elles n'existent pas
     db.create_all()
 
-    # ✅ Ajouter vendeur si pas déjà présent
+    # 🔹 Ajouter vendeur si pas déjà présent
     vendeur = User.query.filter_by(email="ali@onp.com").first()
     if not vendeur:
         vendeur = User(
@@ -21,7 +22,7 @@ with app.app_context():
     else:
         print("ℹ️ Vendeur déjà existant")
 
-    # ✅ Ajouter acheteur si pas déjà présent
+    # 🔹 Ajouter acheteur si pas déjà présent
     acheteur = User.query.filter_by(email="said@onp.com").first()
     if not acheteur:
         acheteur = User(
@@ -36,7 +37,7 @@ with app.app_context():
     else:
         print("ℹ️ Acheteur déjà existant")
 
-    # ✅ Ajouter lot si aucun lot pour ce vendeur
+    # 🔹 Ajouter un lot si aucun n’existe pour ce vendeur
     lot = Lot.query.filter_by(vendeur_id=vendeur.id).first()
     if not lot:
         lot1 = Lot(

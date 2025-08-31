@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="form-container">
+    <h2>Créer un lot</h2>
+    <p>Remplissez le formulaire ci-dessous pour publier un lot en enchères.</p>
+
+    <form method="POST" action="{{ url_for('creer_lot') }}">
+        <div class="form-group">
+            <label for="espece">Espèce</label>
+            <input type="text" id="espece" name="espece" required>
+        </div>
+
+        <div class="form-group">
+            <label for="poids">Poids (kg)</label>
+            <input type="number" step="0.1" id="poids" name="poids" required>
+        </div>
+
+        <div class="form-group">
+            <label for="origine">Origine</label>
+            <input type="text" id="origine" name="origine" required>
+        </div>
+
+        <div class="form-group">
+            <label for="prix_base">Prix de base (DH)</label>
+            <input type="number" step="0.1" id="prix_base" name="prix_base" required>
+        </div>
+
+        <div class="form-group">
+            <label for="date_fin">Date de fin</label>
+            <input type="datetime-local" id="date_fin" name="date_fin" required>
+        </div>
+
+        <button type="submit" class="btn-submit"> Publier le lot</button>
+    </form>
+</div>
+
+{% endblock %}

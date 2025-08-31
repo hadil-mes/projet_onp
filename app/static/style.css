@@ -1,0 +1,641 @@
+/* ====== GLOBAL ====== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+    background-color: #1877f2;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover,
+.navbar nav a.active {
+    text-decoration: underline;
+}
+
+/* ====== FOOTER ====== */
+.footer {
+    background-color: #1877f2;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+}
+
+
+/* ====== CONTENEUR CENTRÉ (pour login, register, etc.) ====== */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* ====== BOX (formulaires & cartes) ====== */
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* ====== FORMULAIRES ====== */
+.box h2 {
+    margin-bottom: 20px;
+    color: #1877f2;
+}
+.box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.box button:hover {
+    background-color: #165cdb;
+}
+
+/* ====== LIENS SECONDAIRES ====== */
+.extra-links {
+    margin-top: 15px;
+}
+.extra-links a {
+    color: #1877f2;
+    font-size: 14px;
+    text-decoration: none;
+}
+.extra-links a:hover {
+    text-decoration: underline;
+}
+.btn-register {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #42b72a;
+    color: white !important;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.btn-register:hover {
+    background-color: #36a420;
+}
+
+/* ====== PAGES ENCHÈRES (cartes) ====== */
+.lots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+.card-lot {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.card-lot h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+.card-lot .btn-bid {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    background-color: #1877f2;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.card-lot .btn-bid:hover {
+    background-color: #165cdb;
+}
+
+/* ====== FOOTER ====== */
+footer {
+    background-color: #1877f2;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+.qr-code {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.qr-code img {
+    width: 120px;      /* taille réduite */
+    height: 120px;     /* carré harmonisé */
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+}
+.qr-container {
+    display: flex;
+    justify-content: center;   /* centrer horizontalement */
+    align-items: center;       /* centrer verticalement */
+    flex-direction: column;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.qr-container img {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+/* Centrage de la page */
+.encheres-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centre horizontalement */
+    justify-content: center; /* centre verticalement */
+    min-height: 100vh;
+    background: #f5f6f7;
+    text-align: center;
+}
+
+/* Carte du lot */
+.card-lot {
+    background: #fff;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 350px;
+    text-align: center;
+}
+
+/* QR code */
+.qr-code img {
+    width: 150px;
+    height: 150px;
+    margin: 15px auto;
+    display: block;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 8px;
+    background: #fff;
+}
+
+/* Bouton */
+.btn-bid {
+    background: #1877f2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-bid:hover {
+    background: #145dbf;
+}
+
+/* Lien détails */
+.details-link {
+    display: block;
+    margin-top: 12px;
+    color: #1877f2;
+    text-decoration: none;
+    font-weight: bold;
+}
+.details-link:hover {
+    text-decoration: underline;
+}
+.page-container {
+    max-width: 800px;         /* largeur maximale */
+    margin: 40px auto;        /* centre horizontalement */
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;       /* centre le texte et le contenu */
+}
+
+footer {
+    background: #0d6efd;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;     /* fixe le footer */
+    bottom: 0;           /* colle en bas */
+    left: 0;
+    width: 100%;         /* prend toute la largeur */
+    font-size: 14px;
+}
+.form-container {
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.btn-submit {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+/* --- Section Hero --- */
+.hero {
+    background: url('/static/encheres-live.jpg') no-repeat center center/cover;
+    height: 70vh; /* un peu plus haut pour donner de l’impact */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.55); /* voile sombre pour rendre le texte lisible */
+    border-radius: 10px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.btn-hero {
+    background: #ff9800;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-hero:hover {
+    background: #e68900;
+}
+
+/* --- Section Features --- */
+.features {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+/* --- Profil Page --- */
+.profil-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background: #f5f7fa;
+    padding: 20px;
+}
+
+.profil-card {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.profil-card h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.profil-card p {
+    margin: 8px 0;
+    color: #555;
+}
+
+.profil-info {
+    margin: 20px 0;
+    text-align: left;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.profil-info p {
+    margin: 6px 0;
+    font-size: 1rem;
+}
+
+.profil-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    display: block;
+    text-decoration: none;
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-danger {
+    display: block;
+    text-decoration: none;
+    background: #dc3545;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-danger:hover {
+    background: #a71d2a;
+}
+/* --- Register Page --- */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: #f5f7fa;
+    padding: 20px;
+}
+
+.register-card {
+    background: white;
+    padding: 35px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.register-card h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.register-card p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.form-actions {
+    margin-top: 20px;
+}
+
+.link-text {
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+.link-text a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
+/* Forcer la couleur des liens dans la navbar */
+.navbar a {
+    color: white !important;
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline !important;
+}
+.timer-text {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+/* Forcer tous les liens de la navbar à être alignés */
+.navbar nav a {
+    display: flex;              /* les icônes et texte seront alignés */
+    align-items: center;        /* centre verticalement */
+    gap: 6px;                   /* espace entre l’icône et le texte */
+    padding: 5px 8px;           /* uniformise les espacements */
+}
+
+.navbar nav a.creer-lot {
+    background: white;
+    color: #1877f2 !important;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.navbar nav a.creer-lot:hover {
+    background: #f1f1f1;
+}
+.flash-container {
+    display: flex;
+    justify-content: center;   /* centre horizontalement */
+    margin: 20px auto;         /* espace autour */
+    position: relative;
+    top: 20px;                 /* décale vers le bas */
+}
+
+.flash {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+    min-width: 250px;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
+}
+
+/* ✅ Succès */
+.flash-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* ⚠️ Avertissement */
+.flash-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* ❌ Erreur */
+.flash-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ℹ️ Info */
+.flash-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}

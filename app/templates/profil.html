@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="profil-container">
+    <div class="profil-card">
+        <h2>👤 Mon Profil</h2>
+        <p>Bienvenue <strong>{{ user.nom }}</strong> 👋</p>
+
+        <div class="profil-info">
+            <p><strong>Nom :</strong> {{ user.nom }}</p>
+            <p><strong>Email :</strong> {{ user.email }}</p>
+            <p><strong>Rôle :</strong> 
+                {% if user.role == "vendeur" %}
+                    Vendeur
+                {% else %}
+                     Acheteur
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="profil-actions">
+            <a href="{{ url_for('encheres') }}" class="btn-primary">Voir les enchères</a>
+            <a href="{{ url_for('logout') }}" class="btn-danger">Se déconnecter</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

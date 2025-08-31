@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2> Inscription</h2>
+        <p>Créez un compte pour participer aux enchères.</p>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.nom.label }}
+                {{ form.nom(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.mot_de_passe.label }}
+                {{ form.mot_de_passe(class="form-control") }}
+            </div>
+
+            <!-- ✅ Ajout du champ rôle correctement placé -->
+            <div class="form-group">
+                {{ form.role.label }}
+                {{ form.role(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn-auth") }}
+            </div>
+        </form>
+
+        <p class="redirect-link">
+            Déjà un compte ? <a href="{{ url_for('login') }}">Connexion</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

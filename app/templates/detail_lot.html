@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-container">
+    <h2>Détail du lot</h2>
+    <div class="card-lot">
+        <h3>{{ lot.espece }}</h3>
+        <p><strong>Quantité :</strong> {{ lot.poids }} kg</p>
+        <p><strong>Origine :</strong> {{ lot.origine }}</p>
+        <p><strong>Prix de base :</strong> {{ lot.prix_base }} DH</p>
+        <p><strong>Prix actuel :</strong> <span style="color:blue; font-weight:bold;">{{ lot.prix_actuel }} DH</span></p>
+        <p><strong>Vendeur :</strong> {{ vendeur.nom }}</p>
+
+        <!-- Timer -->
+        <p><strong>Temps restant :</strong>
+            <span id="timer-{{ lot.id }}"
+                  class="timer-text"
+                  data-endtime="{{ lot.date_fin.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+                  ⏳ Chargement...
+            </span>
+        </p>
+
+        <!-- Statut -->
+        <p><strong>Statut :</strong> 
+            {% if lot.est_termine() %}
+                <span style="color:red;">⛔ Terminé</span>
+            {% else %}
+                <span style="color:green;">🟢 En cours</span>
+            {% endif %}
+        </p>
+
+        {% if gagnant %}
+            <p><strong>🏆 Gagnant :</strong> {{ gagnant.nom }}</p>
+        {% endif %}
+
+        <!-- Enchérir -->
+        {% if current_user.is_authenticated %}
+            {% if current_user.id == lot.vendeur_id %}
+                <p style="color:red;">⛔ Vous êtes le vendeur de ce lot.</p>
+            {% elif lot.est_termine() %}
+                <p style="color:red;">⛔ Enchère terminée.</p>
+            {% elif current_user.role == "acheteur" %}
+                <form method="POST" action="{{ url_for('encherir', lot_id=lot.id) }}">
+                    <label for="montant">💰 Votre offre :</label>
+                    <input type="number" name="montant" step="0.1" min="{{ lot.prix_actuel + 1 }}" required>
+                    <button type="submit" class="btn-bid">💸 Enchérir</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <p><a href="{{ url_for('login') }}">Connectez-vous</a> pour enchérir.</p>
+        {% endif %}
+    </div>
+
+    <!-- Historique des enchères -->
+    <div class="card-lot" style="margin-top:20px;">
+        <h3> Historique des enchères</h3>
+        {% if encheres %}
+            <ul style="list-style:none; padding:0;">
+                {% for enchere in encheres %}
+                    <li>
+                        💰 <strong>{{ enchere.montant }} DH</strong> 
+                        {% if lot.est_termine() %}
+                            par {{ enchere.acheteur }}
+                        {% else %}
+                            (anonyme )
+                        {% endif %}
+                        <em> le {{ enchere.date.strftime('%d/%m/%Y %H:%M:%S') }}</em>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucune enchère pour ce lot.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Script Timer -->
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+
+{% endblock %}

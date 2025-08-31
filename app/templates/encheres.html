@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="encheres-container">
+    <h2> Liste des enchères</h2>
+    <div class="lots-container">
+        {% for lot in lots %}
+        <div class="card-lot">
+            <h3>{{ lot.espece }}</h3>
+            <p><strong>Quantité :</strong> {{ lot.poids }} kg</p>
+            <p><strong>Prix actuel :</strong> <span style="color:blue; font-weight:bold;">{{ lot.prix_actuel }} DH</span></p>
+            
+            <!-- Timer -->
+            <p><strong>Temps restant :</strong> 
+                <span id="timer-{{ lot.id }}" 
+                      class="timer-text"
+                      data-endtime="{{ lot.date_fin.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+                      ⏳ Chargement...
+                </span>
+            </p>
+
+            <!-- QR Code -->
+            <div class="qr-code">
+                <img src="data:image/png;base64,{{ lot.qr_code }}" alt="QR Code du lot">
+                <p>📱 Scannez pour voir ce lot</p>
+            </div>
+
+            <!-- Boutons -->
+            {% if current_user.is_authenticated %}
+                {% if current_user.id == lot.vendeur_id %}
+                    <p style="color:red;">⛔ Vous êtes le vendeur de ce lot.</p>
+                {% elif lot.est_termine() %}
+                    <p style="color:red; font-weight:bold;">⛔ Terminé</p>
+                {% elif current_user.role == "acheteur" %}
+                    <form method="POST" action="{{ url_for('encherir', lot_id=lot.id) }}">
+                        <input type="number" name="montant" step="0.1" min="{{ lot.prix_actuel + 1 }}" required>
+                        <button type="submit" class="btn-bid">💸 Enchérir</button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <p><a href="{{ url_for('login') }}">Connectez-vous</a> pour enchérir.</p>
+            {% endif %}
+
+            <!-- Lien détails -->
+            <a href="{{ url_for('detail_lot', lot_id=lot.id) }}" class="details-link">📖 Voir détails</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Script du timer -->
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+
+{% endblock %}

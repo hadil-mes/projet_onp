@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Section Hero -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Bienvenue sur la plateforme BidSea</h1>
+        <p>
+            Cette plateforme est basée sur l’application développée par l’ONP pour garantir 
+            la <strong>sécurité</strong>, la <strong>transparence</strong> et la 
+            <strong>digitalisation</strong> des ventes aux enchères de produits halieutiques.
+        </p>
+        <a href="{{ url_for('encheres') }}" class="btn-hero">Voir les enchères</a>
+    </div>
+</div>
+<!-- Section Pourquoi choisir -->
+<div class="features">
+    <h2>Pourquoi choisir ONP ?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>📦 Gestion des lots</h3>
+            <p>Créez et publiez facilement vos lots de poissons.</p>
+        </div>
+        <div class="feature-card">
+            <h3>💰 Enchères en temps réel</h3>
+            <p>Participez aux enchères avec une mise à jour instantanée du prix.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔒 Sécurité</h3>
+            <p>Connexion sécurisée et rôles distincts pour acheteurs & vendeurs.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📱 QR Codes</h3>
+            <p>Chaque lot génère un QR code unique pour un accès rapide.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

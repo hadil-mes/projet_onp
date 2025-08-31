@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidSea</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <div class="navbar">
+        <div class="logo-text">BidSea</div>
+        <nav>
+            <a href="{{ url_for('home') }}">Accueil</a>
+            <a href="{{ url_for('encheres') }}">Enchères</a>
+
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('profil') }}">Profil</a>
+
+                {% if current_user.role == 'vendeur' %}
+                  <a href="{{ url_for('creer_lot') }}" class="btn-creer">Créer un lot</a>
+
+                {% endif %}
+
+                <a href="{{ url_for('logout') }}">Déconnexion</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Connexion</a>
+                <a href="{{ url_for('register') }}">Inscription</a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <!-- ===== FLASH MESSAGES ===== -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- ===== CONTENU ===== -->
+    <div class="page-container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2025 - BidSea. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const flashes = document.querySelectorAll(".flash");
+    flashes.forEach(flash => {
+        setTimeout(() => {
+            flash.style.transition = "opacity 0.8s";
+            flash.style.opacity = "0";
+            setTimeout(() => flash.remove(), 800);
+        }, 3000);
+    });
+});
+</script>
