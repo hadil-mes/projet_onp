@@ -10,5 +10,5 @@ COPY . .
 # Render attribue dynamiquement le port via la variable d’environnement $PORT
 EXPOSE 10000
 
-# Lancer avec gunicorn via sh -c (pour interpréter $PORT)
-CMD ["sh", "-c", "gunicorn -b 0.0.0.0:${PORT} app:app"]
+# Lancer avec gunicorn sur main:app
+CMD ["sh", "-c", "gunicorn -w 4 -b 0.0.0.0:${PORT} main:app"]
