@@ -1,0 +1,13 @@
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+
+# Base de données SQLite
+*.db
+
+# Environnement virtuel
+.venv/
+venv/
+
+# Config locale
+instance/
