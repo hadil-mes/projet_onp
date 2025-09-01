@@ -7,6 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length
 from flask_mail import Mail, Message
+import os
 
 # Import des modèles (depuis app/models.py)
 from app.models import db, User, Lot, Bid
@@ -20,9 +21,15 @@ app.secret_key = "super_secret_key"
 # Config base SQLite (locale)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///onp.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 # ===================== CONFIG MAIL =====================
-app.config['MAIL_SERVER'] = 'localhost'
-app.config['MAIL_PORT'] = 8025
+if os.environ.get("DOCKER_ENV"):  # 👉 Mode Docker
+    app.config['MAIL_SERVER'] = 'mailhog'
+    app.config['MAIL_PORT'] = 1025
+else:  # 👉 Mode Local
+    app.config['MAIL_SERVER'] = 'localhost'
+    app.config['MAIL_PORT'] = 8025
+
 app.config['MAIL_USERNAME'] = None
 app.config['MAIL_PASSWORD'] = None
 app.config['MAIL_USE_TLS'] = False
@@ -283,15 +290,20 @@ def logout():
     flash("✅ Déconnexion réussie.", "success")
     return redirect(url_for("login"))
 # ===================== FLASK MAIL =====================
+# ===================== FLASK MAIL =====================
 @app.route('/testmail')
 def test_mail():
-    msg = Message(
-        "Test BidSea", 
-        recipients=["demo@bidsea.com"]  # adresse fictive OK
-    )
-    msg.body = "Ceci est un email de test généré par l'application BidSea."
-    mail.send(msg)
-    return "Email envoyé (check ton terminal aiosmtpd) !"
+    try:
+        msg = Message(
+            "Test BidSea",
+            recipients=["demo@bidsea.com"]  # adresse fictive
+        )
+        msg.body = "Ceci est un email de test généré par l'application BidSea."
+        mail.send(msg)
+        return "✅ Email envoyé (check MailHog sur http://localhost:8025)"
+    except Exception as e:
+        # Renvoie l'erreur au navigateur au lieu d'un 500 silencieux
+        return f"⚠️ Erreur lors de l'envoi du mail : {e}", 500
 
 @app.route("/admin")
 @login_required
