@@ -9,3 +9,4 @@ pillow
 email-validator
 pytz
 Flask-Mail
+flask_migrate

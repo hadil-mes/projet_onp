@@ -4,11 +4,17 @@ services:
   onp-app:
     build: .
     container_name: onp-app
+    command: gunicorn -w 4 -b 0.0.0.0:5000 main:app
     ports:
-      - "80:5000"
-    restart: always
-  init-db:
-    build: .
-    command: python init_db.py
+      - "5000:5000"
     volumes:
       - .:/app
+
+  init-db:
+    build: .
+    container_name: init-db
+    command: python -c "import os; print('>>> contenu du répertoire:', os.listdir('.')); import init_db"
+    volumes:
+      - .:/app
+    depends_on:
+      - onp-app

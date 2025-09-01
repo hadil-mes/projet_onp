@@ -1,4 +1,4 @@
-from app.app import app, db
+from main import app, db
 from app.models import User, Lot, Bid
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
