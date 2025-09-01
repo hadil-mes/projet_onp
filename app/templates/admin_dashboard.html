@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-container">
+    <h2>Tableau de bord Admin</h2>
+
+    <!-- ===== UTILISATEURS ===== -->
+    <h3>Utilisateurs</h3>
+    <table>
+        <tr style="background:#1877f2; color:white;">
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                {% if user.role != "admin" %}
+                    <a href="{{ url_for('toggle_role', user_id=user.id) }}" class="btn btn-warning">Changer rôle</a>
+                    <a href="{{ url_for('delete_user', user_id=user.id) }}" class="btn btn-danger">Supprimer</a>
+                {% else %}
+                    <em>Admin</em>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+<!-- ===== LOTS ===== -->
+<h3>Lots</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Espèce</th>
+            <th>Poids</th>
+            <th>Prix de base</th>
+            <th>Prix actuel</th>
+            <th>Vendeur</th>
+            <th>Date fin</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lot in lots %}
+        <tr>
+            <td>{{ lot.espece }}</td>
+            <td>{{ lot.poids }} kg</td>
+            <td>{{ lot.prix_base }} DH</td>
+            <td>{{ lot.prix_actuel }} DH</td>
+            <td>{{ lot.vendeur }}</td>
+            <td>{{ lot.date_fin.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td>
+                <a href="{{ url_for('delete_lot', lot_id=lot.id) }}" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+</div>
+{% endblock %}

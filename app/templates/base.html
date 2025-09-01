@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -19,8 +19,11 @@
                 <a href="{{ url_for('profil') }}">Profil</a>
 
                 {% if current_user.role == 'vendeur' %}
-                  <a href="{{ url_for('creer_lot') }}" class="btn-creer">Créer un lot</a>
+                    <a href="{{ url_for('creer_lot') }}" class="btn-creer">Créer un lot</a>
+                {% endif %}
 
+                {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn-admin"> Admin</a>
                 {% endif %}
 
                 <a href="{{ url_for('logout') }}">Déconnexion</a>
@@ -44,6 +47,7 @@
       {% endif %}
     {% endwith %}
 
+
     <!-- ===== CONTENU ===== -->
     <div class="page-container">
         {% block content %}{% endblock %}
@@ -54,18 +58,18 @@
         <p>&copy; 2025 - BidSea. Tous droits réservés.</p>
     </footer>
 
+    <!-- ===== SCRIPT AUTO-DISPARITION FLASH ===== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flashes = document.querySelectorAll(".flash");
+            flashes.forEach(flash => {
+                setTimeout(() => {
+                    flash.style.transition = "opacity 0.8s";
+                    flash.style.opacity = "0";
+                    setTimeout(() => flash.remove(), 800);
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const flashes = document.querySelectorAll(".flash");
-    flashes.forEach(flash => {
-        setTimeout(() => {
-            flash.style.transition = "opacity 0.8s";
-            flash.style.opacity = "0";
-            setTimeout(() => flash.remove(), 800);
-        }, 3000);
-    });
-});
-</script>
