@@ -8,3 +8,4 @@ qrcode
 pillow
 email-validator
 pytz
+Flask-Mail
