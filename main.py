@@ -23,7 +23,10 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///onp.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # ===================== CONFIG MAIL =====================
-if os.environ.get("DOCKER_ENV"):  # 👉 Mode Docker
+if os.environ.get("RENDER"):  # 👉 Détection Render
+    app.config['MAIL_SUPPRESS_SEND'] = True
+    print("📭 Mode Render : les emails sont désactivés (mock).")
+elif os.environ.get("DOCKER_ENV"):  # 👉 Mode Docker avec MailHog
     app.config['MAIL_SERVER'] = 'mailhog'
     app.config['MAIL_PORT'] = 1025
 else:  # 👉 Mode Local
@@ -35,7 +38,6 @@ app.config['MAIL_PASSWORD'] = None
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_DEFAULT_SENDER'] = "noreply@bidsea.com"
-
 
 mail = Mail(app)
 
@@ -161,26 +163,29 @@ def encherir(lot_id):
         # ================== ENVOI EMAIL AU VENDEUR ==================
         vendeur = User.query.get(lot.vendeur_id)
         if vendeur and vendeur.email:
-            msg = Message(
-                subject="Nouvelle enchère sur votre lot",
-                sender="noreply@bidsea.com",
-                recipients=[vendeur.email]
-            )
-            msg.body = (
-                f"Bonjour {vendeur.nom},\n\n"
-                f"Un acheteur a placé une nouvelle enchère de {montant} DH "
-                f"sur votre lot : {lot.espece} ({lot.poids} kg).\n\n"
-                f"Prix actuel : {lot.prix_actuel} DH.\n\n"
-                f"-- BidSea"
-            )
-            mail.send(msg)
-        # ============================================================
+            try:
+                msg = Message(
+                    subject="Nouvelle enchère sur votre lot",
+                    sender="noreply@bidsea.com",
+                    recipients=[vendeur.email]
+                )
+                msg.body = (
+                    f"Bonjour {vendeur.nom},\n\n"
+                    f"Un acheteur a placé une nouvelle enchère de {montant} DH "
+                    f"sur votre lot : {lot.espece} ({lot.poids} kg).\n\n"
+                    f"Prix actuel : {lot.prix_actuel} DH.\n\n"
+                    f"-- BidSea"
+                )
+                mail.send(msg)
+            except Exception as e:
+                print("⚠️ Erreur envoi mail vendeur :", e)
 
         flash("✅ Enchère placée avec succès !", "success")
     else:
         flash("⚠️ Votre offre doit être supérieure au prix actuel.", "warning")
 
     return redirect(url_for("detail_lot", lot_id=lot.id))
+
 
 @app.route("/lot/<int:lot_id>")
 def detail_lot(lot_id):
@@ -220,12 +225,14 @@ def detail_lot(lot_id):
                     f"Merci d'avoir utilisé BidSea.\n\n"
                     f"-- L'équipe BidSea"
                 )
-                mail.send(msg)
-
-                lot.email_envoye = True
-                db.session.commit()
+                try:
+                    mail.send(msg)
+                    lot.email_envoye = True
+                    db.session.commit()
+                except Exception as e:
+                    print("⚠️ Erreur envoi mail gagnant :", e)
             except Exception as e:
-                print("⚠️ Erreur envoi mail gagnant :", e)
+                print("⚠️ Erreur bloc envoi mail gagnant :", e)
         else:
             print(f"⚠️ Email invalide pour gagnant : {gagnant.email}")
 
@@ -289,8 +296,9 @@ def logout():
     logout_user()
     flash("✅ Déconnexion réussie.", "success")
     return redirect(url_for("login"))
-# ===================== FLASK MAIL =====================
-# ===================== FLASK MAIL =====================
+
+
+# ===================== FLASK MAIL TEST =====================
 @app.route('/testmail')
 def test_mail():
     try:
@@ -302,9 +310,10 @@ def test_mail():
         mail.send(msg)
         return "✅ Email envoyé (check MailHog sur http://localhost:8025)"
     except Exception as e:
-        # Renvoie l'erreur au navigateur au lieu d'un 500 silencieux
         return f"⚠️ Erreur lors de l'envoi du mail : {e}", 500
 
+
+# ===================== ADMIN DASHBOARD =====================
 @app.route("/admin")
 @login_required
 def admin_dashboard():
@@ -312,7 +321,7 @@ def admin_dashboard():
         flash("⛔ Accès réservé à l'administrateur.", "danger")
         return redirect(url_for("home"))
     users = User.query.all()
-    lots = Lot.query.all()  
+    lots = Lot.query.all()
 
     # Enrichir avec le vendeur
     lots_data = []
@@ -329,6 +338,8 @@ def admin_dashboard():
         })
 
     return render_template("admin_dashboard.html", users=users, lots=lots_data)
+
+
 @app.route("/admin/delete/<int:user_id>")
 @login_required
 def delete_user(user_id):
@@ -344,6 +355,8 @@ def delete_user(user_id):
         db.session.commit()
         flash("✅ Utilisateur supprimé.", "success")
     return redirect(url_for("admin_dashboard"))
+
+
 @app.route("/admin/delete-lot/<int:lot_id>")
 @login_required
 def delete_lot(lot_id):
