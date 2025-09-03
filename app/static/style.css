@@ -47,7 +47,6 @@ body {
     margin-top: 40px;
 }
 
-
 /* ====== CONTENEUR CENTRÉ (pour login, register, etc.) ====== */
 .center-container {
     display: flex;
@@ -325,8 +324,10 @@ footer {
 }
 /* --- Section Hero --- */
 .hero {
-    background: url('/static/encheres-live.jpg') no-repeat center center/cover;
-    height: 70vh; /* un peu plus haut pour donner de l’impact */
+    .hero {
+    background: url("/static/images/background.jpg") no-repeat center center/cover;
+}
+    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;

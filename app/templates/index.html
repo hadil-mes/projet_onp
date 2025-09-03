@@ -2,8 +2,17 @@
 {% block content %}
 
 <!-- Section Hero -->
-<div class="hero">
-    <div class="hero-content">
+<div class="hero" 
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); 
+            background-size: cover; 
+            background-position: center; 
+            height: 90vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            color: white;">
+    <div class="hero-content" style="background-color: rgba(0,0,0,0.5); padding: 30px; border-radius: 10px;">
         <h1>Bienvenue sur la plateforme BidSea</h1>
         <p>
             Cette plateforme est basée sur l’application développée par l’ONP pour garantir 
@@ -13,6 +22,7 @@
         <a href="{{ url_for('encheres') }}" class="btn-hero">Voir les enchères</a>
     </div>
 </div>
+
 <!-- Section Pourquoi choisir -->
 <div class="features">
     <h2>Pourquoi choisir BidSea?</h2>
